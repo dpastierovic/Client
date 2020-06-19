@@ -10,7 +10,7 @@ export class MapComponent implements OnInit {
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v11';
   lat = 48.148598;
-  lng = 17.107748;
+  lon = 17.107748;
   constructor() { }
   ngOnInit() {
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
@@ -18,7 +18,7 @@ export class MapComponent implements OnInit {
         container: 'map',
         style: this.style,
         zoom: 13,
-        center: [this.lng, this.lat]
+        center: [this.lon, this.lat]
     });
     // Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
