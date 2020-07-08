@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: false,  
+  serverUrl: "localhost:44345",
   mapbox: {
     accessToken: 'pk.eyJ1IjoicGFzdG8iLCJhIjoiY2pvc3YxOHN1MHV1ZjN3cGIwNWE4aHJjcCJ9.EPBhG_sqvQXtdwGkgXlxvA'
   }
