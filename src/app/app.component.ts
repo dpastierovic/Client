@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://www.strava.com/api/v3/oauth/authorize',
@@ -12,6 +13,8 @@ export const authCodeFlowConfig: AuthConfig = {
   responseType: 'code',
   scope: 'activity:write,read',
   showDebugInformation: true,
+  tokenEndpoint: 'https://www.strava.com/api/v3/oauth/token',
+  customQueryParams: {approval_prompt : 'auto'}
 };
 
 @Component({
@@ -21,24 +24,30 @@ export const authCodeFlowConfig: AuthConfig = {
 })
 @Injectable()
 export class AppComponent implements OnInit{
-  constructor(private oauthService: OAuthService, private activatedRoute: ActivatedRoute) {
-
-    console.log('ouch')
-  }
+  constructor(private oauthService: OAuthService, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) { }
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
+      if(params['code'] == null) {
+        console.log('eeeeempty')
+        return;
+      }
       console.log(params)
+      this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }}).subscribe(_ => console.log(_))
     })
   }
   title = 'GpsClient';
+  authorized = false;
+  token;
 
   OnClickMe()
   {
-    console.log(this.oauthService.hasValidIdToken())
     this.oauthService.configure(authCodeFlowConfig)
-    console.log(this.oauthService.loginUrl)
     this.oauthService.initImplicitFlow();
-    console.log('done')
-    console.log(this.oauthService.getAccessToken)
+  }
+
+  OnTokenButton()
+  {
+    console.log(this.authorized)
+    console.log(this.token)
   }
 }
