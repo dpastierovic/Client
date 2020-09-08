@@ -11,7 +11,7 @@ export const authCodeFlowConfig: AuthConfig = {
   redirectUri: window.location.origin,
   clientId: '41746',
   responseType: 'code',
-  scope: 'activity:write,read',
+  scope: 'activity:read_all',
   showDebugInformation: true,
   tokenEndpoint: 'https://www.strava.com/api/v3/oauth/token',
   customQueryParams: {approval_prompt : 'auto'}
@@ -32,7 +32,10 @@ export class AppComponent implements OnInit{
         return;
       }
       console.log(params)
-      this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }}).subscribe(_ => console.log(_))
+      this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
+      .subscribe(_ => {
+        this.token = _
+        console.log(_)})
     })
   }
   title = 'GpsClient';
@@ -49,5 +52,11 @@ export class AppComponent implements OnInit{
   {
     console.log(this.authorized)
     console.log(this.token)
+  }
+
+  OnGetActivities()
+  {
+    console.log(this.token)
+    this.httpClient.get('/api/activity/activities', { headers: { access_token: this.token['access_token']} }).subscribe(_ => {console.log(_)})
   }
 }
