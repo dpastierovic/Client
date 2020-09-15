@@ -59,4 +59,9 @@ export class AppComponent implements OnInit{
     console.log(this.token)
     this.httpClient.get('/api/activity/activities', { headers: { access_token: this.token['access_token']} }).subscribe(_ => {console.log(_)})
   }
+
+  OnMarkerToggle()
+  {
+    
+  }
 }
