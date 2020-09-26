@@ -8,7 +8,7 @@ export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://www.strava.com/api/v3/oauth/authorize',
   loginUrl: 'https://www.strava.com/api/v3/oauth/authorize',
   oidc: false,
-  redirectUri: window.location.origin,
+  redirectUri: window.location.origin + '/login',
   clientId: '41746',
   responseType: 'code',
   scope: 'activity:read_all',
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit{
   constructor(private oauthService: OAuthService, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) { }
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      if(params['code'] == null) {
+      if(params['code'] == null || params['scope'] == null) {
         console.log('eeeeempty')
         return;
       }
@@ -38,6 +38,7 @@ export class AppComponent implements OnInit{
         console.log(_)})
     })
   }
+  userLoggedIn = false;
   title = 'GpsClient';
   authorized = false;
   token;
@@ -46,6 +47,9 @@ export class AppComponent implements OnInit{
   {
     this.oauthService.configure(authCodeFlowConfig)
     this.oauthService.initImplicitFlow();
+    // dummy
+    this.userLoggedIn = true;
+    console.log('user logged in true')
   }
 
   OnTokenButton()
