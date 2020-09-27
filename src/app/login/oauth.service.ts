@@ -26,6 +26,10 @@ export class OauthService {
     return this._loggedInUser
   }
 
+  public get userIsLoggedIn() : Boolean{
+    return this._loggedInUser != null
+  }
+
   constructor(private oauthService: OAuthService) {
     let name = localStorage.getItem('SEname')
     let surname = localStorage.getItem('SEsurname')
@@ -36,7 +40,7 @@ export class OauthService {
     if(name == 'null' || surname == 'null' || accessToken == 'null' || refreshToken == 'null' || expiresAt == 'null') {
       return
     }
-    
+
     this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt)
   }
 

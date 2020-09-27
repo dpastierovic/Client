@@ -13,12 +13,23 @@ import { OauthService } from './oauth.service';
 export class LoginComponent implements OnInit {
 
   success = false
+  alreadyLoggedIn = false
   response = ''
 
   constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private oauthService: OauthService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
+      this.alreadyLoggedIn = false
+      this.success = false
+
+      if (this.oauthService.userIsLoggedIn)
+      {
+        this.response = 'Logout current user if you want to log in again.'
+        this.alreadyLoggedIn = true
+        return
+      }
+
       if (params['code'] == null || params['scope'] == null) {
         this.success = false
         this.response = 'Strava did not return necessary data.'
