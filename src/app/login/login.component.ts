@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { OauthService } from '../oauth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,22 +11,26 @@ import { HttpClient } from '@angular/common/http';
 })
 @Injectable()
 export class LoginComponent implements OnInit {
+
   success = false
   response = ''
 
-  constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient) { }
+  constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private oauthService: OauthService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['code'] == null || params['scope'] == null) {
         this.success = false
         this.response = 'Strava did not return necessary data.'
+        this.oauthService.LoginFailed()
         return;
       }
 
       if (params['scope'] != 'read,activity:read_all'){
         this.success = false
         this.response = 'Insufficient access scopes granted.'
+        this.oauthService.LoginFailed()
+        return
       }
       
       this.success = true
@@ -33,7 +38,12 @@ export class LoginComponent implements OnInit {
 
       this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
       .subscribe(_ => {
-        console.log(_)})
+        console.log(_)
+      this.oauthService.LoginSuccesful()})
     })
+  }
+
+  OnRetryButtonClick(){
+    this.oauthService.Login()
   }
 }

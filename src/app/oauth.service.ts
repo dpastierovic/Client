@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 
 export const authCodeFlowConfig: AuthConfig = {
@@ -17,13 +17,28 @@ export const authCodeFlowConfig: AuthConfig = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class OauthService {
+  @Output() loginChanged = new EventEmitter<Boolean>()
+  
+  private _userLoggedIn : Boolean
+  public get userLoggedIn() : Boolean{
+    return this._userLoggedIn
+  }
 
   constructor(private oauthService: OAuthService) { }
 
   Login(){
     this.oauthService.configure(authCodeFlowConfig)
     this.oauthService.initImplicitFlow();
+  }
+
+  LoginSuccesful(){
+    this._userLoggedIn = true
+    this.loginChanged.emit(this.userLoggedIn)
+  }
+
+  LoginFailed(){
+    this._userLoggedIn = false
+    this.loginChanged.emit(this.userLoggedIn)
   }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { OauthService } from './oauth.service';
 
 @Component({
@@ -11,12 +9,16 @@ import { OauthService } from './oauth.service';
 })
 @Injectable()
 export class AppComponent implements OnInit{
-  constructor(private oauthService: OauthService, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) { }
-  ngOnInit(): void {  }
+
   userLoggedIn = false;
 
-  OnLoginButtonClick()
-  {
+  constructor(private oauthService: OauthService) { }
+
+  ngOnInit(): void {  
+    this.oauthService.loginChanged.subscribe(userLoggedIn => this.userLoggedIn = userLoggedIn)
+  }
+
+  OnLoginButtonClick()  {
     this.oauthService.Login()
   }
 }

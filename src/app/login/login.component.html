@@ -2,7 +2,7 @@
     <div class="text-center">
         <div><b>Login failed.</b></div>
         <div>{{ response }}</div>
-        <button type="button" class="btn btn-danger">Retry</button>
+        <button type="button" class="btn btn-danger" (click)="OnRetryButtonClick()">Retry</button>
     </div>    
 </div>
 <div class="alert alert-success m-5" max-width="200px" role="alert" *ngIf="success">
