@@ -21,12 +21,24 @@ export const authCodeFlowConfig: AuthConfig = {
 export class OauthService {
   @Output() loginChanged = new EventEmitter<User>()
   
-  private _loggerInUser : User
-  public get loggerInUser() : User{
-    return this._loggerInUser
+  private _loggedInUser : User
+  public get loggedInUser() : User{
+    return this._loggedInUser
   }
 
-  constructor(private oauthService: OAuthService) { }
+  constructor(private oauthService: OAuthService) {
+    let name = localStorage.getItem('SEname')
+    let surname = localStorage.getItem('SEsurname')
+    let accessToken = localStorage.getItem('SEaccessToken')
+    let refreshToken = localStorage.getItem('SErefreshToken')
+    let expiresAt = localStorage.getItem('SEexpiresAt')
+
+    if(name == null || surname == null || accessToken == null || refreshToken == null || expiresAt == null) {
+      return
+    }
+
+    this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt)
+  }
 
   Login(){
     this.oauthService.configure(authCodeFlowConfig)
@@ -34,12 +46,22 @@ export class OauthService {
   }
 
   LoginSuccesful(name: string, surname: string, accessToken: string, refreshToken: string, expiresAt: string){
-    this._loggerInUser = new User(name, surname, accessToken, refreshToken, expiresAt)
-    this.loginChanged.emit(this._loggerInUser)
+    this._loggedInUser = new User(name, surname, accessToken, refreshToken, expiresAt)
+    localStorage.setItem('SEname', name)
+    localStorage.setItem('SEsurname', surname)
+    localStorage.setItem('SEaccessToken', accessToken)
+    localStorage.setItem('SErefreshToken', refreshToken)
+    localStorage.setItem('SEexpiresAt', expiresAt)
+    this.loginChanged.emit(this._loggedInUser)
   }
 
   LoginFailed(){
-    this._loggerInUser = null
-    this.loginChanged.emit(this._loggerInUser)
+    this._loggedInUser = null
+    localStorage.setItem('SEname', null)
+    localStorage.setItem('SEsurname', null)
+    localStorage.setItem('SEaccessToken', null)
+    localStorage.setItem('SErefreshToken', null)
+    localStorage.setItem('SEexpiresAt', null)
+    this.loginChanged.emit(this._loggedInUser)
   }
 }

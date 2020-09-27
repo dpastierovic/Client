@@ -12,11 +12,10 @@ export class AppComponent implements OnInit{
 
   userLoggedIn = null;
 
-  constructor(private oauthService: OauthService) { 
-    this.userLoggedIn = oauthService.loggerInUser;
-  }
+  constructor(private oauthService: OauthService) {  }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
+    this.userLoggedIn = this.oauthService.loggedInUser
     this.oauthService.loginChanged.subscribe(userLoggedIn => {
       console.log(userLoggedIn)
       this.userLoggedIn = userLoggedIn
