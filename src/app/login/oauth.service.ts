@@ -33,9 +33,10 @@ export class OauthService {
     let refreshToken = localStorage.getItem('SErefreshToken')
     let expiresAt = localStorage.getItem('SEexpiresAt')
 
-    if(name == null || surname == null || accessToken == null || refreshToken == null || expiresAt == null) {
+    if(name == 'null' || surname == 'null' || accessToken == 'null' || refreshToken == 'null' || expiresAt == 'null') {
       return
     }
+    
     this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt)
   }
 
@@ -55,12 +56,16 @@ export class OauthService {
   }
 
   LoginFailed(){
+    this.Logout()
+  }
+
+  Logout()  {
     this._loggedInUser = null
     localStorage.setItem('SEname', null)
     localStorage.setItem('SEsurname', null)
     localStorage.setItem('SEaccessToken', null)
     localStorage.setItem('SErefreshToken', null)
     localStorage.setItem('SEexpiresAt', null)
-    this.loginChanged.emit(this._loggedInUser)
+    this.loginChanged.emit(null)
   }
 }

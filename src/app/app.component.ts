@@ -17,14 +17,16 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.userLoggedIn = this.oauthService.loggedInUser
-    console.log(this.userLoggedIn)
     this.oauthService.loginChanged.subscribe(userLoggedIn => {
-      console.log(userLoggedIn)
       this.userLoggedIn = userLoggedIn
     })
   }
 
   OnLoginButtonClick()  {
     this.oauthService.Login()
+  }
+
+  OnLogoutButtonClick() {
+    this.oauthService.Logout()
   }
 }
