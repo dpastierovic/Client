@@ -1,5 +1,5 @@
-import { environment } from '../../environments/environment';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 @Component({
   selector: 'app-map',

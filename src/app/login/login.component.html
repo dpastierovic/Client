@@ -1,0 +1,20 @@
+
+<div class="alert alert-success m-5" max-width="200px" role="alert" *ngIf="success">
+    <div class="text-center">
+        <div><b>Login successful.</b></div>
+        <div>{{ response }}</div>
+    </div>    
+</div>
+<div class="alert alert-warning m-5" max-width="200px" role="alert" *ngIf="alreadyLoggedIn">
+    <div class="text-center">
+        <div><b>User already logged in.</b></div>
+        <div>{{ response }}</div>
+    </div>    
+</div>
+<div class="alert alert-danger m-5" max-width="200px" role="alert" *ngIf="!success && !alreadyLoggedIn">
+    <div class="text-center">
+        <div><b>Login failed.</b></div>
+        <div>{{ response }}</div>
+        <button type="button" class="btn btn-danger" (click)="OnRetryButtonClick()">Retry</button>
+    </div>    
+</div>
