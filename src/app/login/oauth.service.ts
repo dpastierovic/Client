@@ -36,7 +36,6 @@ export class OauthService {
     if(name == null || surname == null || accessToken == null || refreshToken == null || expiresAt == null) {
       return
     }
-
     this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt)
   }
 

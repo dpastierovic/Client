@@ -15,17 +15,17 @@ export class User {
 
     _surname: string
     public get surname() {
-        return this._name;
+        return this._surname;
     }
 
     _accessToken: string
     public get accessToken() {
-        return this._name;
+        return this._accessToken;
     }
 
     _refreshToken: string
     public get refreshToken() {
-        return this._name;
+        return this._refreshToken;
     }
 
     _expiresAt: Date
