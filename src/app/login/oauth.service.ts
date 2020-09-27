@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { User } from './user';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://www.strava.com/api/v3/oauth/authorize',
@@ -18,11 +19,11 @@ export const authCodeFlowConfig: AuthConfig = {
   providedIn: 'root'
 })
 export class OauthService {
-  @Output() loginChanged = new EventEmitter<Boolean>()
+  @Output() loginChanged = new EventEmitter<User>()
   
-  private _userLoggedIn : Boolean
-  public get userLoggedIn() : Boolean{
-    return this._userLoggedIn
+  private _loggerInUser : User
+  public get loggerInUser() : User{
+    return this._loggerInUser
   }
 
   constructor(private oauthService: OAuthService) { }
@@ -32,13 +33,13 @@ export class OauthService {
     this.oauthService.initImplicitFlow();
   }
 
-  LoginSuccesful(){
-    this._userLoggedIn = true
-    this.loginChanged.emit(this.userLoggedIn)
+  LoginSuccesful(name: string, surname: string, accessToken: string, refreshToken: string, expiresAt: string){
+    this._loggerInUser = new User(name, surname, accessToken, refreshToken, expiresAt)
+    this.loginChanged.emit(this._loggerInUser)
   }
 
   LoginFailed(){
-    this._userLoggedIn = false
-    this.loginChanged.emit(this.userLoggedIn)
+    this._loggerInUser = null
+    this.loginChanged.emit(this._loggerInUser)
   }
 }

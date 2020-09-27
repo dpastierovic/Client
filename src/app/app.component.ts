@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { OauthService } from './oauth.service';
+import { OauthService } from './login/oauth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +10,17 @@ import { OauthService } from './oauth.service';
 @Injectable()
 export class AppComponent implements OnInit{
 
-  userLoggedIn = false;
+  userLoggedIn = null;
 
-  constructor(private oauthService: OauthService) { }
+  constructor(private oauthService: OauthService) { 
+    this.userLoggedIn = oauthService.loggerInUser;
+  }
 
   ngOnInit(): void {  
-    this.oauthService.loginChanged.subscribe(userLoggedIn => this.userLoggedIn = userLoggedIn)
+    this.oauthService.loginChanged.subscribe(userLoggedIn => {
+      console.log(userLoggedIn)
+      this.userLoggedIn = userLoggedIn
+    })
   }
 
   OnLoginButtonClick()  {

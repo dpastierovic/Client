@@ -2,7 +2,7 @@ import { Component, OnInit, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OauthService } from '../oauth.service';
+import { OauthService } from './oauth.service';
 
 @Component({
   selector: 'app-login',
@@ -37,9 +37,9 @@ export class LoginComponent implements OnInit {
       this.response = 'Synchronizing activities.'
 
       this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
-      .subscribe(_ => {
-        console.log(_)
-      this.oauthService.LoginSuccesful()})
+      .subscribe(userData => {
+        this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'], userData['RefreshToken'], userData['ExpiresAt'])
+      })
     })
   }
 
