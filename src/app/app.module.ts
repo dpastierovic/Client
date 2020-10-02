@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { LoginComponent } from './login/login.component';
 import { InterceptorService } from './services/interceptor.service';
+import { ActivityListComponent } from './activity-list/activity-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponents,
-    LoginComponent
+    LoginComponent,
+    ActivityListComponent
   ],
   imports: [
     BrowserModule,    

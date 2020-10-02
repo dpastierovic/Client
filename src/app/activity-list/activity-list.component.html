@@ -1,0 +1,22 @@
+<div class="table-responsive m-5">
+    <table class="table w-auto">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Renamed</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let activity of activities">
+                <td>
+                    {{activity}}
+                </td>
+                <td>Name {{activity}}</td>
+                <td>No</td>
+                <td><button class="btn btn-primary btn-sm">Generate name</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

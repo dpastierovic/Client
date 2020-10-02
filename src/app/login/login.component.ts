@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       {
         this.response = 'Logout current user if you want to log in again.'
         this.alreadyLoggedIn = true
-        setTimeout(() => { document.location.href = window.location.origin }, 1500)
+        setTimeout(() => { this.router.navigate(['activity-list']) }, 1500)
         return
       }
 
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
           this.synchronizing = false 
           this.success = true
           this.response = 'Activities synchronized.'          
-          setTimeout(() => { document.location.href = window.location.origin }, 1500)
+          setTimeout(() => { this.router.navigate(['activity-list']) }, 1500)
         })
       })
     })
