@@ -45,11 +45,14 @@ export class LoginComponent implements OnInit {
       }
       
       this.success = true
-      this.response = 'Synchronizing activities.'
+      this.response = 'Connecting to the server...'      
 
       this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
       .subscribe(userData => {
-        this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'], userData['RefreshToken'], userData['ExpiresAt'])
+        this.success = true
+        this.response = 'Synchronizing activities.'
+        this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'],
+          userData['RefreshToken'], userData['ExpiresAt'], userData['ProfilePicture'])
       })
     })
   }
