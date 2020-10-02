@@ -3,3 +3,10 @@
     width: 40px;
     border-radius: 50%;
 }
+
+.api-logo {
+    width: 90px;
+    height: 40px;
+    background-size: 90px;
+    margin: 0px -10px 0px 0px;
+}
