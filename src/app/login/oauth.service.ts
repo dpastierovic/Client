@@ -31,17 +31,18 @@ export class OauthService {
   }
 
   constructor(private oauthService: OAuthService) {
-    let name = localStorage.getItem('SEname')
-    let surname = localStorage.getItem('SEsurname')
-    let accessToken = localStorage.getItem('SEaccessToken')
-    let refreshToken = localStorage.getItem('SErefreshToken')
-    let expiresAt = localStorage.getItem('SEexpiresAt')
+    let name = localStorage.getItem('name')
+    let surname = localStorage.getItem('surname')
+    let accessToken = localStorage.getItem('accessToken')
+    let refreshToken = localStorage.getItem('refreshToken')
+    let expiresAt = localStorage.getItem('expiresAt')
+    let profilePicture = localStorage.getItem('profilePicture')
 
-    if(name == 'null' || surname == 'null' || accessToken == 'null' || refreshToken == 'null' || expiresAt == 'null') {
+    if (name == 'null' || surname == 'null' || accessToken == 'null' || refreshToken == 'null' || expiresAt == 'null' || profilePicture == 'null') {
       return
     }
 
-    this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt)
+    this.LoginSuccesful(name, surname, accessToken, refreshToken, expiresAt, profilePicture)
   }
 
   Login(){
@@ -49,13 +50,14 @@ export class OauthService {
     this.oauthService.initImplicitFlow();
   }
 
-  LoginSuccesful(name: string, surname: string, accessToken: string, refreshToken: string, expiresAt: string){
-    this._loggedInUser = new User(name, surname, accessToken, refreshToken, expiresAt)
-    localStorage.setItem('SEname', name)
-    localStorage.setItem('SEsurname', surname)
-    localStorage.setItem('SEaccessToken', accessToken)
-    localStorage.setItem('SErefreshToken', refreshToken)
-    localStorage.setItem('SEexpiresAt', expiresAt)
+  LoginSuccesful(name: string, surname: string, accessToken: string, refreshToken: string, expiresAt: string, profilePicture: string){
+    this._loggedInUser = new User(name, surname, accessToken, refreshToken, expiresAt, profilePicture)
+    localStorage.setItem('name', name)
+    localStorage.setItem('surname', surname)
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+    localStorage.setItem('expiresAt', expiresAt)
+    localStorage.setItem('profilePicture', profilePicture)
     this.loginChanged.emit(this._loggedInUser)
   }
 
@@ -65,11 +67,12 @@ export class OauthService {
 
   Logout()  {
     this._loggedInUser = null
-    localStorage.setItem('SEname', null)
-    localStorage.setItem('SEsurname', null)
-    localStorage.setItem('SEaccessToken', null)
-    localStorage.setItem('SErefreshToken', null)
-    localStorage.setItem('SEexpiresAt', null)
+    localStorage.setItem('name', null)
+    localStorage.setItem('surname', null)
+    localStorage.setItem('accessToken', null)
+    localStorage.setItem('refreshToken', null)
+    localStorage.setItem('expiresAt', null)
+    localStorage.setItem('profilePicture', null)
     this.loginChanged.emit(null)
   }
 }
