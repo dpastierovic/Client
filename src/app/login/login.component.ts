@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OauthService } from './oauth.service';
+import { OauthService } from '../services/oauth.service';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
         return;
       }
 
-      if (params['scope'] != 'read,activity:read_all'){
+      if (params['scope'] != 'read,activity:read,read_all'){
+        console.log(params['scope'])
         this.failure = true
         this.response = 'Insufficient access scopes granted.'
         this.oauthService.LoginFailed()
@@ -61,10 +62,11 @@ export class LoginComponent implements OnInit {
         this.response = 'Synchronizing activities...'
         this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'],
           userData['RefreshToken'], userData['ExpiresAt'], userData['ProfilePicture'])
-        this.httpClient.get('/api/activity/activities', { headers: { token: userData['AccessToken'] }}).subscribe(_ => {
+        this.httpClient.get('/api/activity/activities', { headers: { token: userData['AccessToken'], page: '1', perPage: '20' }}).subscribe(_ => {
           this.synchronizing = false 
           this.success = true
-          this.response = 'Activities synchronized.'          
+          this.response = 'Activities synchronized.' 
+          console.log(_)         
           setTimeout(() => { this.router.navigate(['activity-list']) }, 1500)
         })
       })

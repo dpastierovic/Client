@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { accessToken } from 'mapbox-gl';
+import { StravaApiService } from '../services/strava-api.service';
 
 @Component({
   selector: 'app-activity-list',
@@ -10,9 +10,9 @@ export class ActivityListComponent implements OnInit {
 
   activities: number[] = [1, 2, 3];
 
-  constructor() { }
+  constructor(private api: StravaApiService) { }
 
   ngOnInit() {
+    this.api.getStats().subscribe(_ => console.log(_))
   }
-
 }

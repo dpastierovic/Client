@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { User } from './user';
+import { User } from '../login/user';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://www.strava.com/api/v3/oauth/authorize',
@@ -9,7 +9,7 @@ export const authCodeFlowConfig: AuthConfig = {
   redirectUri: window.location.origin + '/login',
   clientId: '41746',
   responseType: 'code',
-  scope: 'activity:read_all',
+  scope: 'activity:read,read_all',
   showDebugInformation: true,
   tokenEndpoint: 'https://www.strava.com/api/v3/oauth/token',
   customQueryParams: {approval_prompt : 'auto'}
