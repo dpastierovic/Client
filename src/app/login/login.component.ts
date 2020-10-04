@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { OauthService } from '../services/oauth.service';
+import { StravaApiService } from '../services/strava-api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   synchronizing = false
   response = ''
 
-  constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private oauthService: OauthService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private stravaApi: StravaApiService, private oauthService: OauthService, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -54,21 +54,13 @@ export class LoginComponent implements OnInit {
       
       this.connecting = true
       this.response = 'Connecting to the server...'      
-
-      this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
-      .subscribe(userData => {
-        this.synchronizing = true
+      
+      this.stravaApi.getCode(params['code']).subscribe(userData => {
+        this.success = true
         this.connecting = false
-        this.response = 'Synchronizing activities...'
+        this.response = 'Connected.'
         this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'],
           userData['RefreshToken'], userData['ExpiresAt'], userData['ProfilePicture'])
-        this.httpClient.get('/api/activity/activities', { headers: { token: userData['AccessToken'], page: '1', perPage: '20' }}).subscribe(_ => {
-          this.synchronizing = false 
-          this.success = true
-          this.response = 'Activities synchronized.' 
-          console.log(_)         
-          setTimeout(() => { this.router.navigate(['activity-list']) }, 1500)
-        })
       })
     })
   }

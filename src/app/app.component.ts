@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Injectable, ViewChild } from '@angular/core';
-import { OauthService } from './login/oauth.service';
+import { OauthService } from './services/oauth.service';
 import { User } from './login/user'
 import { errorArrivedEvent } from './services/interceptor.service';
 
