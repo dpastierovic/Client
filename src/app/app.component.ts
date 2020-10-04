@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { OauthService } from './login/oauth.service';
 import { User } from './login/user'
+import { errorArrivedEvent } from './services/interceptor.service';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,10 @@ import { User } from './login/user'
 })
 @Injectable()
 export class AppComponent implements OnInit{
+  @ViewChild('openModalButton', {static: false}) modal;
 
   userLoggedIn : User = null
+  error: string = ''
 
   constructor(private oauthService: OauthService) {  }
 
@@ -19,6 +22,11 @@ export class AppComponent implements OnInit{
     this.userLoggedIn = this.oauthService.loggedInUser
     this.oauthService.loginChanged.subscribe(userLoggedIn => {
       this.userLoggedIn = userLoggedIn
+    })
+
+    errorArrivedEvent.subscribe(error => {
+      this.error = error
+      this.modal.nativeElement.click();
     })
   }
 
