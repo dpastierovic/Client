@@ -2,6 +2,11 @@
     min-width: 100px;
 }
 
+.name-colum {
+    min-width: 300px;
+    max-width: 30px;
+}
+
 .form-control{
     max-width: 100px;
 }
