@@ -2,21 +2,71 @@
     <table class="table w-auto">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Renamed</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let activity of activities">
+            <tr *ngFor="let activity of activities; let i = index" [attr.data-index]="i">
+                <td>{{i + 1 + (pageCurrent - 1) * pageSize}}</td>
                 <td>
-                    {{activity}}
+                    <a href="https://strava.com/activities/{{activity.id}}" target="_">{{activity.name}}</a>
                 </td>
-                <td>Name {{activity}}</td>
                 <td>No</td>
-                <td><button class="btn btn-primary btn-sm">Generate name</button></td>
+                <td><button class="btn btn-primary btn-sm" (click)="onRenameClicked(activity)">Generate name</button></td>
             </tr>
         </tbody>
     </table>
+    <div class="container">
+        <div class="row">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" *ngIf="pageCount > 1">
+                        <a class="page-link" (click)="onPageChanged(1)">First</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent !=1 && pageCount > 1">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent - 1)">Previous</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent - 3 > 0">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent - 3)">{{pageCurrent - 3}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent - 2 > 0">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent - 2)">{{pageCurrent - 2}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent - 1 > 0">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent - 1)">{{pageCurrent - 1}}</a>
+                    </li>
+                    <li class="page-item" >
+                        <a class="page-link"><b>{{pageCurrent}}</b></a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent + 1 <= pageCount">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent + 1)">{{pageCurrent + 1}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent + 2 <= pageCount">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent + 2)">{{pageCurrent + 2}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent + 3 <= pageCount">
+                        <a class="page-link" (click)="onPageChanged(pageCurrent + 3)">{{pageCurrent + 3}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCurrent !=pageCount && pageCount > 1">
+                        <a class="page-link"(click)="onPageChanged(pageCurrent + 1)">Next</a>
+                    </li>
+                    <li class="page-item" *ngIf="pageCount > 1">
+                        <a class="page-link" (click)="onPageChanged(pageCount)">Last</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mr-2">
+                <label for="example-number-input" class="col-2 col-form-label"><p>Number</p></label>
+            </div>
+            <div class="mr-2">
+                <input #goToInput class="form-control" type="number" min="1" max="{{pageCount}}" value="{{goToNumber}}" (keyup)="onKey($event)" ng-model="value">
+            </div>
+            <div class="mr-2">
+                <button class="btn btn-primary" (click)="navigateToPage()">Go</button>
+            </div>
+        </div>
+    </div>
 </div>
