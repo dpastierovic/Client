@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
         center: [this.lon, this.lat]
     });
 
-    new mapboxgl.Marker().setLngLat([this.lon, this.lat]).setDraggable(true).addTo(this.map);
+    new mapboxgl.Marker().setLngLat([this.lon, this.lat]).setDraggable(true).setPopup(new mapboxgl.Popup().setText('Bratislava')).addTo(this.map);
   }
 
   AddMarker()

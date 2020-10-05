@@ -1,5 +1,6 @@
+import { HttpRequest } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { parse } from 'querystring';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { StravaApiService } from '../services/strava-api.service';
 
 @Component({
@@ -9,46 +10,33 @@ import { StravaApiService } from '../services/strava-api.service';
 })
 export class ActivityListComponent implements OnInit {
   @ViewChild('goToInput', {static: false}) goToInput;
-  activityCount;
-  activities;
-  pageCurrent
-  pageCount
-  pageSize = 10
-  goToNumber = 1
+
+  private activityCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0)  
+  activityCountObservable = this.activityCountSubject.asObservable();
+  pageSize: number = 10
+  pageCurrent: number = 1
+  currentPage: BehaviorSubject<number> =  new BehaviorSubject<number>(1)
+  activities
+  pageRequest: Subscription
 
   constructor(private api: StravaApiService) { }
 
   ngOnInit() {
-    this.api.getStats().subscribe(_ => {
-      this.activityCount = _['all_ride_totals']['count']
-      this.pageCount = Math.round(parseInt(this.activityCount) / this.pageSize)
-      this.pageCurrent = 1
-    })
-    this.api.getActivities(1, this.pageSize).subscribe(_ => this.activities = _)
+    this.api.getStats().subscribe(_ =>  this.activityCountSubject.next(_['all_ride_totals']['count']))
+    this.pageRequest = this.api.getActivities(1, this.pageSize).subscribe(_ => this.activities = _)
+    this.currentPage.subscribe(_ => this.loadPage(_))
   }
 
   onRenameClicked(item):void{
     console.log(item)
   }
 
-  onPageChanged(pageNumber: number){
+  loadPage(pageNumber: number): void {
+    if(this.pageRequest != undefined) this.pageRequest.unsubscribe()
 
-    if (pageNumber < 1) pageNumber = 1
-    if (pageNumber > this.pageCount) pageNumber = this.pageCount
-
-    console.log(pageNumber)
-    this.api.getActivities(pageNumber, this.pageSize).subscribe(_ => {
+    this.pageRequest = this.api.getActivities(pageNumber, this.pageSize).subscribe(_ => {
       this.activities = _
       this.pageCurrent = pageNumber
     })
-  }
-
-  onKey(event){
-    console.log(event)
-    this.goToNumber = event.target.value
-  }
-
-  navigateToPage() {
-    this.onPageChanged(this.goToNumber)
   }
 }

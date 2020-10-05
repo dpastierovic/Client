@@ -22,58 +22,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="container-fluid mr-2">
-                    <div class="row center">
-                        <div class="flex-row">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item" *ngIf="pageCount > 1">
-                                        <a class="page-link btn" (click)="onPageChanged(1)">First</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent !=1 && pageCount > 1">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 1)">Previous</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent - 3 > 0">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 3)">{{pageCurrent - 3}}</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent - 2 > 0">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 2)">{{pageCurrent - 2}}</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent - 1 > 0">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 1)">{{pageCurrent - 1}}</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link btn"><b>{{pageCurrent}}</b></a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent + 1 <= pageCount">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 1)">{{pageCurrent + 1}}</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent + 2 <= pageCount">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 2)">{{pageCurrent + 2}}</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent + 3 <= pageCount">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 3)">{{pageCurrent + 3}}</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCurrent !=pageCount && pageCount > 1">
-                                        <a class="page-link btn"(click)="onPageChanged(pageCurrent + 1)">Next</a>
-                                    </li>
-                                    <li class="page-item" *ngIf="pageCount > 1">
-                                        <a class="page-link btn" (click)="onPageChanged(pageCount)">Last</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            </div>
-                        <div class="mr-2">
-                            <label for="example-number-input" class="col-2 col-form-label"><p>Number</p></label>
-                        </div>
-                        <div class="mr-2">
-                            <input #goToInput class="form-control" type="number" min="1" max="{{pageCount}}" value="{{goToNumber}}" (keyup)="onKey($event)" ng-model="value">
-                        </div>
-                        <div class="mr-2">
-                            <button class="btn btn-primary" (click)="navigateToPage()">Go</button>
-                        </div>
-                    </div>
-                </div>
+                <app-paging [pageSize]="pageSize" [itemsCount]="activityCountObservable" [currentPage]="currentPage"></app-paging>
             </div>
         </div>
         <div class="col-6">
