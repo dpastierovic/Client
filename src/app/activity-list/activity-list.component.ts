@@ -1,7 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { StravaApiService } from '../services/strava-api.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-activity-list',
@@ -9,7 +9,6 @@ import { StravaApiService } from '../services/strava-api.service';
   styleUrls: ['./activity-list.component.css']
 })
 export class ActivityListComponent implements OnInit {
-  @ViewChild('goToInput', {static: false}) goToInput;
 
   private activityCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0)  
   activityCountObservable = this.activityCountSubject.asObservable();
@@ -19,7 +18,7 @@ export class ActivityListComponent implements OnInit {
   activities
   pageRequest: Subscription
 
-  constructor(private api: StravaApiService) { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.api.getStats().subscribe(_ =>  this.activityCountSubject.next(_['all_ride_totals']['count']))

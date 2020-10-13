@@ -9,6 +9,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { PagingComponent } from './paging/paging.component';
 import { FormsModule } from '@angular/forms';
+import { MarkersComponent } from './markers/markers.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     RoutingComponents,
     LoginComponent,
     ActivityListComponent,
-    PagingComponent
+    PagingComponent,
+    MarkersComponent
   ],
   imports: [
     BrowserModule,    

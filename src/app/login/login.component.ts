@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { OauthService } from '../services/oauth.service';
-import { StravaApiService } from '../services/strava-api.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   synchronizing = false
   response = ''
 
-  constructor(private activatedRoute: ActivatedRoute, private stravaApi: StravaApiService, private oauthService: OauthService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private stravaApi: ApiService, private oauthService: OauthService, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
