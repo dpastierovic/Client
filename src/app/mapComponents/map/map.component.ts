@@ -30,6 +30,7 @@ export class MapComponent implements OnInit {
 
     if (this.showMarkers) {
       this.markerService.addedMarkerObservable.subscribe(this.addMarker);
+      this.markerService.updatedMarkerObservable.subscribe(this.updateMarker);
       this.markerService.removedMarkerObservable.subscribe(this.removeMarker);
     }
   }
@@ -40,14 +41,22 @@ export class MapComponent implements OnInit {
   }
 
   private addMarker = (marker: Marker): void => {
-    if(marker == null){
+    if (marker == null) {
       return;
     }
     marker.mapMarker.addTo(this.map);
   }
 
+  private updateMarker = (marker: Marker): void => {
+    if (marker == null) {
+      return;
+    }
+    marker.inactiveMarker.remove();
+    marker.mapMarker.addTo(this.map);
+  }
+
   private removeMarker = (marker: Marker): void => {
-    if(marker == null){
+    if (marker == null) {
       return;
     }
     marker.mapMarker.remove();

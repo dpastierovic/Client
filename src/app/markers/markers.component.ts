@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import * as mapboxgl from 'mapbox-gl';
 import { BehaviorSubject } from 'rxjs';
 import { Marker } from '../entities/marker';
 import { MapComponent } from '../mapComponents/map/map.component';
@@ -42,7 +43,15 @@ export class MarkersComponent implements OnInit {
   }
 
   public modifyMarker(marker: Marker): void {
-    marker.mapMarker.setDraggable(true);
+    marker.enableModifications();
+  }
+
+  public lockMarker(marker: Marker): void {
+    marker.disableModifications();
+  }
+
+  public discardMarker(marker: Marker): void {
+    marker.discard();
   }
 
   public removeMarker(marker: Marker): void {
