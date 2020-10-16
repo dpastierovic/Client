@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
+import { Marker } from 'src/app/entities/marker';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -20,14 +21,20 @@ export class MapComponent implements OnInit {
         style: this.style,
         zoom: 13,
         center: [this.lon, this.lat]
-    });
-
-    new mapboxgl.Marker().setLngLat([this.lon, this.lat]).setDraggable(true).setPopup(new mapboxgl.Popup().setText('Bratislava')).addTo(this.map);
+    });    
   }
 
-  AddMarker()
+  addNewMarker(): Marker {
+    let marker = new Marker(this.map.getCenter().lat, this.map.getCenter().lng, "Undefined")
+    this.AddMarker(marker)
+    return marker
+  }
+
+  AddMarker(marker: Marker)
   {
-    console.log('NYI')
+    new mapboxgl.Marker({ color: '#fc4c02'}).setLngLat([marker.Longitude, marker.Latitude]).setDraggable(false).setPopup(
+      new mapboxgl.Popup().setHTML('<b>' + marker.Name + '</b><br/>Radius: 500 m'))
+      .addTo(this.map);
   }
 
   OnKeypress(e)

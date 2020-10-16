@@ -1,10 +1,13 @@
-import { MergeMapSubscriber } from 'rxjs/internal/operators/mergeMap';
-
 export class Marker {
-
-    private readonly 
-
-    constructor(lat: number, lon: number, name: string) { 
-
+  constructor(lat: number, lon: number, name: string) {
+    this.Latitude = lat;
+    this.Longitude = lon;
+    this.Name = name;
   }
+
+  public Latitude: number;
+
+  public Longitude: number;
+
+  public Name: string;
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
@@ -15,10 +15,12 @@ export class PagingComponent implements OnInit {
   goToNumber: number = 1
   pageCount: number = 1
 
-  constructor() { this.pageSize = 10 }
+  constructor() {
+
+  }
 
   ngOnInit() {
-    this.itemsCount.subscribe(_ => this.pageCount = Math.round(_ / 10))
+    this.itemsCount.subscribe(_ => this.pageCount = Math.ceil(_ / this.pageSize))
   }
 
   onPageChanged(pageNumber: number){
