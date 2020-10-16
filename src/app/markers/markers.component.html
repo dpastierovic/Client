@@ -14,7 +14,7 @@
                     <tbody>
                        <tr *ngFor="let marker of markers; let i = index" [attr.data-index]="i">
                            <td>{{i + 1 + (pageCurrent - 1) * pageSize}}</td>
-                           <td>{{marker.Name}}</td>
+                           <td>{{marker.name}}</td>
                            <td>500 m</td>
                            <td>
                                 <button class="btn btn-primary btn-sm mr-2" (click)="modifyMarker(marker)">Modify</button>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-6">
-            <app-map></app-map>
+            <app-map [showMarkers]="true"></app-map>
             <button class="btn btn-primary m-2" (click)="addMarker()">Add marker</button>
         </div>
     </div>

@@ -33,17 +33,19 @@ export class MarkersComponent implements OnInit {
       this.allMarkers = markers;
       this.markersCountSubject.next(this.allMarkers.length)
       this.markers = this.allMarkers.slice((this.pageCurrent - 1) * this.pageSize, this.pageCurrent * this.pageSize)
-      this.allMarkers.forEach(marker => {
-        this.map.AddMarker(marker)
-      });
     })
   }
 
-  addMarker(){
-    let marker = this.map.addNewMarker()
-    this.markersService.addMarker(marker)
+  public addMarker(): void {
+    let coordinates = this.map.getCenter();
+    this.markersService.addMarker(coordinates.lat, coordinates.lng, 'Undefined');
   }
 
-  modifyMarker(marker: Marker): void{
+  public modifyMarker(marker: Marker): void {
+    marker.mapMarker.setDraggable(true);
+  }
+
+  public removeMarker(marker: Marker): void {
+    this.markersService.removeMarker(marker);
   }
 }
