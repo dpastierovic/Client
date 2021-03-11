@@ -7,12 +7,13 @@ export class Marker {
   private markerService: MarkerService;
   private oldName: string;
 
-  constructor(markerService: MarkerService, lat: number, lon: number, name: string) {
+  constructor(markerService: MarkerService, lat: number, lon: number, radius: number, name: string, id: number) {
     this.latitude = lat;
     this.longitude = lon;
     this.name = name;
-    this.radius = 500;
+    this.radius = radius;
     this.markerService = markerService
+    this.id = id
 
     this.lockedMarker = new mapboxgl.Marker({ color: '#fc4c02'})
       .setLngLat([lon, lat])
@@ -32,6 +33,8 @@ export class Marker {
   public mapMarker: mapboxgl.Marker
 
   public inactiveMarker: mapboxgl.Marker
+
+  public id: number;
 
   public latitude: number;
 

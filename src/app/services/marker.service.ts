@@ -15,7 +15,7 @@ export class MarkerService {
   private removedMarkersSubject: BehaviorSubject<Marker> = new BehaviorSubject<Marker>(null);
   private updatedMarkersSubject: BehaviorSubject<Marker> = new BehaviorSubject<Marker>(null);
 
-  constructor(api: ApiService) {
+  constructor(private api: ApiService) {
     this.markersObservable = this.markersSubject.asObservable();
     this.addedMarkerObservable = this.addedMarkersSubject.asObservable();
     this.removedMarkerObservable = this.removedMarkersSubject.asObservable();
@@ -45,11 +45,15 @@ export class MarkerService {
   public removedMarkerObservable: Observable<Marker>;
 
   // adds marker and notifies subscribers about addition
-  public addMarker(lat: number, lon: number, name: string): void{
-    let marker = new Marker(this, lat, lon, name);
+  public addMarker(lat: number, lon: number, radius: number, name: string): void{
+    let marker = new Marker(this, lat, lon, radius, name, undefined);
     this.markers.push(marker);
     this.markersSubject.next(this.markers);
     this.addedMarkersSubject.next(marker);
+
+    this.api.addMarker(marker).subscribe(_ => {
+      marker.id = _['Id']
+    })
   }
 
   // updates marker and notifies subscribers about update
@@ -64,13 +68,17 @@ export class MarkerService {
     this.markers.splice(index, 1);
     this.removedMarkersSubject.next(marker);
     this.markersSubject.next(this.markers);
+
+    this.api.removeMarker(marker).subscribe();
   }
 
   private deserializeMarker(marker: object): Marker {
     let lat = marker['Latitude'];
     let lon = marker['Longitude'];
     let name = marker['Name'];
+    let radius = marker['Radius'];
+    let id = marker['Id'];
 
-    return new Marker(this, lat, lon, name);
+    return new Marker(this, lat, lon, radius, name, id);
   }
 }

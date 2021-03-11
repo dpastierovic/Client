@@ -39,7 +39,7 @@ export class MarkersComponent implements OnInit {
 
   public addMarker(): void {
     let coordinates = this.map.getCenter();
-    this.markersService.addMarker(coordinates.lat, coordinates.lng, 'Undefined');
+    this.markersService.addMarker(coordinates.lat, coordinates.lng, 500, 'Undefined');
   }
 
   public modifyMarker(marker: Marker): void {

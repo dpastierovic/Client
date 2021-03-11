@@ -23,7 +23,7 @@
                                     <input [(ngModel)]="marker.name" class="form-control" >
                                 </div>
                             </td>
-                            <td>500 m</td>
+                            <td>{{marker.radius}} m</td>
                             <td>
                                 <button class="btn btn-primary btn-sm mr-2" (click)="modifyMarker(marker)" *ngIf="marker.locked">Modify</button>
                                 <button class="btn btn-primary btn-sm mr-2" (click)="lockMarker(marker)" *ngIf="!marker.locked">Save</button>
