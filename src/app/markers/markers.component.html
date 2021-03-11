@@ -1,0 +1,46 @@
+<div class="container-fluid mr-2">
+    <div class="row">
+        <div class="col-6">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" width="50%">Name</th>
+                            <th scope="col">Radius</th>
+                            <th scope="col">Action</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr *ngFor="let marker of markers; let i = index" [attr.data-index]="i">
+                           <td>{{i + 1 + (pageCurrent - 1) * pageSize}}</td>
+                           <td>
+                                <div *ngIf="marker.locked">
+                                    {{marker.name}}
+                                </div>
+                                <div *ngIf="!marker.locked">
+                                    <input [(ngModel)]="marker.name" class="form-control" >
+                                </div>
+                            </td>
+                            <td>{{marker.radius}} m</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm mr-2" (click)="modifyMarker(marker)" *ngIf="marker.locked">Modify</button>
+                                <button class="btn btn-primary btn-sm mr-2" (click)="lockMarker(marker)" *ngIf="!marker.locked">Save</button>
+                                <button class="btn btn-primary btn-sm mr-2" (click)="discardMarker(marker)" *ngIf="!marker.locked">Discard</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm mr-2 float-right" (click)="removeMarker(marker)">Remove</button>
+                            </td>
+                       </tr>
+                    </tbody>
+                </table>
+                <app-paging [pageSize]="pageSize" [itemsCount]="markersCountObservable" [currentPage]="currentPage"></app-paging>
+            </div>
+        </div>
+        <div class="col-6">
+            <app-map [showMarkers]="true"></app-map>
+            <button class="btn btn-primary m-2" (click)="addMarker()">Add marker</button>
+        </div>
+    </div>
+</div>

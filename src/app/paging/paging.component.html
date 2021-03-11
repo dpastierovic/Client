@@ -1,0 +1,93 @@
+<div class="container-fluid mr-2" *ngIf="pageCount > 1">
+    <div class="row">
+        <div class="flex-row">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <!-- First -->
+                    <li class="page-item" *ngIf="pageCount > 1 && pageCurrent != 1">
+                        <a class="page-link btn" (click)="onPageChanged(1)">First</a>
+                    </li>                                    
+                    <li class="page-item" *ngIf="!(pageCount > 1 && pageCurrent != 1)">
+                        <a class="page-link btn disabled">First</a>
+                    </li>
+                    <!-- Previous -->
+                    <li class="page-item" *ngIf="pageCurrent !=1 && pageCount > 1">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 1)">Previous</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent !=1 && pageCount > 1)">
+                        <a class="page-link btn disabled">Previous</a>
+                    </li>
+                    <!-- Three back -->
+                    <li class="page-item" *ngIf="pageCurrent - 3 > 0">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 3)">{{pageCurrent - 3}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent - 3 > 0)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- Two back -->
+                    <li class="page-item" *ngIf="pageCurrent - 2 > 0">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 2)">{{pageCurrent - 2}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent - 2 > 0)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- One back -->
+                    <li class="page-item" *ngIf="pageCurrent - 1 > 0">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent - 1)">{{pageCurrent - 1}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent - 1 > 0)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- Current -->
+                    <li class="page-item">
+                        <a class="page-link btn"><b>{{pageCurrent}}</b></a>
+                    </li>
+                    <!-- One forward -->
+                    <li class="page-item" *ngIf="pageCurrent + 1 <= pageCount">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 1)">{{pageCurrent + 1}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent + 1 <= pageCount)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- Two forward -->
+                    <li class="page-item" *ngIf="pageCurrent + 2 <= pageCount">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 2)">{{pageCurrent + 2}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent + 2 <= pageCount)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- Three forward -->
+                    <li class="page-item" *ngIf="pageCurrent + 3 <= pageCount">
+                        <a class="page-link btn" (click)="onPageChanged(pageCurrent + 3)">{{pageCurrent + 3}}</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent + 3 <= pageCount)">
+                        <a class="page-link btn disabled">-</a>
+                    </li>
+                    <!-- Next -->
+                    <li class="page-item" *ngIf="pageCurrent !=pageCount && pageCount > 1">
+                        <a class="page-link btn"(click)="onPageChanged(pageCurrent + 1)">Next</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCurrent !=pageCount && pageCount > 1)">
+                        <a class="page-link btn disabled">Next</a>
+                    </li>
+                    <!-- Last -->
+                    <li class="page-item" *ngIf="pageCount > 1">
+                        <a class="page-link btn" (click)="onPageChanged(pageCount)">Last</a>
+                    </li>
+                    <li class="page-item" *ngIf="!(pageCount > 1)">
+                        <a class="page-link btn disabled">Last</a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+        <div class="mr-2">
+            <label for="example-number-input" class="col-2 col-form-label"><p>Number</p></label>
+        </div>
+        <div class="mr-2">
+            <input #goToInput class="form-control" type="number" min="1" max="{{pageCount}}" [(ngModel)]="goToNumber" (change)="onKey($event)">
+        </div>
+        <div class="mr-2">
+            <button class="btn btn-primary" (click)="navigateToPage()">Go</button>
+        </div>
+    </div>
+</div>

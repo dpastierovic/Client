@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { OauthService } from './oauth.service';
+import { OauthService } from '../services/oauth.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   synchronizing = false
   response = ''
 
-  constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private oauthService: OauthService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private stravaApi: ApiService, private oauthService: OauthService, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       {
         this.response = 'Logout current user if you want to log in again.'
         this.alreadyLoggedIn = true
-        setTimeout(() => { document.location.href = window.location.origin }, 1500)
+        setTimeout(() => { this.router.navigate(['activity-list']) }, 1500)
         return
       }
 
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
         return;
       }
 
-      if (params['scope'] != 'read,activity:read_all'){
+      if (params['scope'] != 'read,activity:read,read_all'){
+        console.log(params['scope'])
         this.failure = true
         this.response = 'Insufficient access scopes granted.'
         this.oauthService.LoginFailed()
@@ -53,20 +54,13 @@ export class LoginComponent implements OnInit {
       
       this.connecting = true
       this.response = 'Connecting to the server...'      
-
-      this.httpClient.put('/api/authentication/code', params['code'], { headers: { Accept: 'text/plain' }})
-      .subscribe(userData => {
-        this.synchronizing = true
+      
+      this.stravaApi.getCode(params['code']).subscribe(userData => {
+        this.success = true
         this.connecting = false
-        this.response = 'Synchronizing activities...'
+        this.response = 'Connected.'
         this.oauthService.LoginSuccesful(userData['FirstName'], userData['LastName'], userData['AccessToken'],
           userData['RefreshToken'], userData['ExpiresAt'], userData['ProfilePicture'])
-        this.httpClient.get('/api/activity/activities', { headers: { token: userData['AccessToken'] }}).subscribe(_ => {
-          this.synchronizing = false 
-          this.success = true
-          this.response = 'Activities synchronized.'          
-          setTimeout(() => { document.location.href = window.location.origin }, 1500)
-        })
       })
     })
   }

@@ -1,0 +1,32 @@
+<div class="container-fluid mr-2">
+    <div class="row">
+        <div class="col-6">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Renamed</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let activity of activities; let i = index" [attr.data-index]="i">
+                            <td>{{i + 1 + (pageCurrent - 1) * pageSize}}</td>
+                            <td>
+                                <a href="https://strava.com/activities/{{activity.id}}" target="_">{{activity.name}}</a>
+                            </td>
+                            <td>No</td>
+                            <td><button class="btn btn-primary btn-sm" (click)="onRenameClicked(activity)">Generate name</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-paging [pageSize]="pageSize" [itemsCount]="activityCountObservable" [currentPage]="currentPage"></app-paging>
+            </div>
+        </div>
+        <div class="col-6">
+            <app-map></app-map>
+        </div>
+    </div>
+</div>
