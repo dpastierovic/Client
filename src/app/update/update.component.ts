@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { UpdateService } from './update-service.service';
 
 @Component({
   selector: 'app-update',
@@ -11,10 +11,10 @@ import { ApiService } from '../services/api.service';
 })
 export class UpdateComponent implements OnInit {
 
-  private _apiService: ApiService;
+  private _updateService: UpdateService;
 
-  constructor(apiService: ApiService) {
-    this._apiService = apiService;
+  constructor(updateService: UpdateService) {
+    this._updateService = updateService;
   }
 
   private _lastUpdate: string = "";
@@ -22,26 +22,21 @@ export class UpdateComponent implements OnInit {
     return this._lastUpdate;
   }
 
+  private _updateStatus: string = "";
+  get updateStatus(): string {
+    return this._updateStatus;
+  }
+
   ngOnInit() {
-    this.checkLastUpdate();
+    this._updateService.lastUpdate().subscribe(update => this._lastUpdate = update);
+    this._updateService.updateStatus().subscribe(status => this._updateStatus = status);
   }
 
-  onClick(){
-    console.log('hint button clicked');
+  onUpdateClick(): void {
+    this._updateService.update();
   }
 
-  private checkLastUpdate(): void {
-    this._apiService.lastUpdate().subscribe(
-      update => {
-        console.log(update);
-        // this value means user did not update yet
-        if (update.toString() === '01/01/0001 00:00:00'){
-          this._lastUpdate = 'Never';
-        }
-        else {
-          this._lastUpdate = update.toString();
-        }
-      }
-    )
+  onUpdateEverythingClick(): void {
+    this._updateService.updateEverything();
   }
 }

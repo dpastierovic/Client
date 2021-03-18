@@ -4,6 +4,8 @@ import { OauthService } from './oauth.service';
 import { MarkerPost } from '../entities/markerPost';
 import { Marker } from '../entities/marker';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Activity } from '../entities/activity';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +22,15 @@ export class ApiService {
     return this.httpClient.put('/api/authentication/code', code, { headers: { Accept: 'text/plain' }})
   }
 
-  getActivities(page: number, perPage: number) {
+  getActivities(page: number, perPage: number) : Observable<Activity[]>{
     return this.httpClient.get('/api/activity/activities', { headers: { token: localStorage.getItem('accessToken'), page: `${page}`, perPage: `${perPage}` }})
+    .pipe(map(activities => {
+      let output = new Array<Activity>();      
+      (activities as Object[]).forEach(activity => {
+        output.push(new Activity(activity['athlete']['id'], activity['name'], activity['map']['summary_polyline'], activity['start_date_local'], false));
+      });
+      return output;
+    }))
   }
 
   getMarkers() {

@@ -1,6 +1,5 @@
-import { HttpRequest } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ApiService } from '../services/api.service';
 
 @Component({

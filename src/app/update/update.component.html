@@ -6,10 +6,13 @@
         Last update: <b>{{lastUpdate}}</b>
     </div>
     <div>
-        <app-hint-button id="Update" buttonText="Update" hintText="Updates activities uploaded to Strava since the last update." (onClick)="onClick()"></app-hint-button>
+        {{updateStatus}}
+    </div>
+    <div>
+        <app-hint-button id="Update" buttonText="Update" hintText="Updates activities uploaded to Strava since the last update." (onClick)="onUpdateClick()"></app-hint-button>
     </div>
     <div>
         <app-hint-button id="UpdateEverything" buttonText="Update Everything" hintText="Updates ALL activities uploaded to Strava. This can take a lot of time, and uses many Strava API calls, 
-        which are limited hourly and daily. Please use sparingly." (onClick)="onClick()"></app-hint-button>
+        which are limited hourly and daily. Please use sparingly."></app-hint-button>
     </div>
 </div>
