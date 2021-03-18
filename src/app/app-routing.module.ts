@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './mapComponents/map/map.component';
 import { MarkersComponent } from './markers/markers.component';
+import { UpdateComponent } from './update/update.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'markers', component: MarkersComponent },
   { path: 'home', component: AppComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'map-component', component: MapComponent }
+  { path: 'map-component', component: MapComponent },
+  { path: 'update', component: UpdateComponent }
 ];
 
 @NgModule({

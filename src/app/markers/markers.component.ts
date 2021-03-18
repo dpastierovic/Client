@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
 import { BehaviorSubject } from 'rxjs';
 import { Marker } from '../entities/marker';
 import { MapComponent } from '../mapComponents/map/map.component';

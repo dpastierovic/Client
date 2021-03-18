@@ -14,11 +14,11 @@
             </li>
         </ul>
         <ul class="navbar-nav">
+            <li class="nav-item" [routerLinkActive]="['active']" *ngIf="userLoggedIn != null">
+                <a class="nav-link" [routerLink]="['update']">Update</a>
+            </li>
             <li class="nav-item" [routerLinkActive]="['active']" *ngIf="userLoggedIn == null">
                 <a class="nav-link btn" (click)="OnLoginButtonClick()">Login</a>
-            </li>
-            <li *ngIf="userLoggedIn != null">
-                <img class="profile-picture mr-2" src={{userLoggedIn.profilePicture}}>
             </li>
             <li class="nav-item dropdown"  *ngIf="userLoggedIn != null">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,6 +27,9 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#" (click)="OnLogoutButtonClick()">Logout</a>
                 </div>
+            </li>            
+            <li *ngIf="userLoggedIn != null">
+                <img class="profile-picture mr-2" src={{userLoggedIn.profilePicture}}>
             </li>
             <li>
                 <a href="http://www.strava.com">

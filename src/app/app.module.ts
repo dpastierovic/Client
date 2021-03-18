@@ -10,15 +10,19 @@ import { ActivityListComponent } from './activity-list/activity-list.component';
 import { PagingComponent } from './paging/paging.component';
 import { FormsModule } from '@angular/forms';
 import { MarkersComponent } from './markers/markers.component';
+import { UpdateComponent } from './update/update.component';
+import { HintButtonComponent } from './elements/hint-button/hint-button.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RoutingComponents,
-    LoginComponent,
     ActivityListComponent,
+    AppComponent,
+    LoginComponent,
+    MarkersComponent,
     PagingComponent,
-    MarkersComponent
+    RoutingComponents,
+    UpdateComponent,
+    HintButtonComponent
   ],
   imports: [
     BrowserModule,    
@@ -31,7 +35,9 @@ import { MarkersComponent } from './markers/markers.component';
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,
     multi: true
-  }],
-  bootstrap: [AppComponent]
+  }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [HintButtonComponent]
 })
 export class AppModule { }

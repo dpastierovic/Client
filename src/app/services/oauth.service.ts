@@ -9,10 +9,9 @@ export const authCodeFlowConfig: AuthConfig = {
   redirectUri: window.location.origin + '/login',
   clientId: '41746',
   responseType: 'code',
+  customQueryParams: { approval_prompt : 'auto', state: 'private' },
   scope: 'activity:read,read_all',
-  showDebugInformation: true,
-  tokenEndpoint: 'https://www.strava.com/api/v3/oauth/token',
-  customQueryParams: {approval_prompt : 'auto'}
+  tokenEndpoint: 'https://www.strava.com/api/v3/oauth/token'
 };
 
 @Injectable({
@@ -47,7 +46,7 @@ export class OauthService {
 
   Login(){
     this.oauthService.configure(authCodeFlowConfig)
-    this.oauthService.initImplicitFlow();
+    this.oauthService.initImplicitFlow()
   }
 
   LoginSuccesful(name: string, surname: string, accessToken: string, refreshToken: string, expiresAt: string, profilePicture: string){

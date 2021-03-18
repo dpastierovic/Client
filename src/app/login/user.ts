@@ -7,34 +7,41 @@ export class User {
         this._refreshToken = refreshToken
         this._expiresAt = new Date(expiresAt)
         this._profilePicture = profilePicture
+        // todo placeholder
+        this._id = '32565276'
     }
 
-    _name: string
+    _id: string;
+    public get id() {
+        return this._id;
+    }
+
+    _name: string;
     public get name() {
         return this._name;
     }
 
-    _surname: string
+    _surname: string;
     public get surname() {
         return this._surname;
     }
 
-    _accessToken: string
+    _accessToken: string;
     public get accessToken() {
         return this._accessToken;
     }
 
-    _refreshToken: string
+    _refreshToken: string;
     public get refreshToken() {
         return this._refreshToken;
     }
 
-    _expiresAt: Date
+    _expiresAt: Date;
     public get expiresAt()    {
         return this._expiresAt;
     }
 
-    _profilePicture: string
+    _profilePicture: string;
     public get profilePicture() {
         return this._profilePicture;
     }
