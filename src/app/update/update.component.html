@@ -1,5 +1,11 @@
 <div class="container-fluid">
     <div>
+        In order to rename activities, application needs to pull them from the Strava. You can do that by clicking on one of the buttons bellow.
+    </div>
+    <div>
+        Last update: <b>{{lastUpdate}}</b>
+    </div>
+    <div>
         <app-hint-button id="Update" buttonText="Update" hintText="Updates activities uploaded to Strava since the last update." (onClick)="onClick()"></app-hint-button>
     </div>
     <div>

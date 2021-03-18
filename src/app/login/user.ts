@@ -11,37 +11,37 @@ export class User {
         this._id = '32565276'
     }
 
-    _id: string;
+    private _id: string;
     public get id() {
         return this._id;
     }
 
-    _name: string;
+    private _name: string;
     public get name() {
         return this._name;
     }
 
-    _surname: string;
+    private _surname: string;
     public get surname() {
         return this._surname;
     }
 
-    _accessToken: string;
+    private _accessToken: string;
     public get accessToken() {
         return this._accessToken;
     }
 
-    _refreshToken: string;
+    private _refreshToken: string;
     public get refreshToken() {
         return this._refreshToken;
     }
 
-    _expiresAt: Date;
+    private _expiresAt: Date;
     public get expiresAt()    {
         return this._expiresAt;
     }
 
-    _profilePicture: string;
+    private _profilePicture: string;
     public get profilePicture() {
         return this._profilePicture;
     }
