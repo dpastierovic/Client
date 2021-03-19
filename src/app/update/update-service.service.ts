@@ -54,6 +54,9 @@ export class UpdateService {
         if (activity.date < until) {
           finished = true;
         }
+        else {
+          this._apiService.postActivity(activity).subscribe();
+        }
       });
       
       if (!finished) {

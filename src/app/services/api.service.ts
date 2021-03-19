@@ -27,7 +27,9 @@ export class ApiService {
     .pipe(map(activities => {
       let output = new Array<Activity>();      
       (activities as Object[]).forEach(activity => {
-        output.push(new Activity(activity['athlete']['id'], activity['name'], activity['map']['summary_polyline'], activity['start_date_local'], false));
+        output.push(new Activity(activity['id'], activity['athlete']['id'], activity['name'], activity['type'],
+          activity['map']['summary_polyline'], activity['start_date_local'], false)
+        );
       });
       return output;
     }))
@@ -52,5 +54,9 @@ export class ApiService {
 
   lastUpdate(): Observable<Object> {
     return this.httpClient.get('/api/activity/lastUpdate/' + this.oauthService.loggedInUser.id);
+  }
+
+  postActivity(activity: Activity): Observable<Object> {
+    return this.httpClient.put('/api/activity', activity, { headers: { Accept: 'text/plain' }})
   }
 }
