@@ -2,13 +2,14 @@ import { ActivityType } from "./activity-type";
 
 export class Activity {
 
-    constructor(id: string, athleteId: string, name: string, type: string, polyline: string, date: string, renamed: boolean) {
+    constructor(id: string, athleteId: string, name: string, type: string, polyline: string, date: string, localDate: string, renamed: boolean) {
         this._id = id;
         this._athleteId = athleteId;
         this._name = name;
         this._polyline = polyline;
         this._renamed = renamed;
         this._date = new Date(date);
+        this._localDate = new Date(localDate);
 
         switch(type) {
             case 'Ride': {
@@ -35,8 +36,6 @@ export class Activity {
                 this._type = ActivityType.Other;
             }
         }
-
-        console.log(this);
     }
 
     private _id: string;
@@ -71,6 +70,11 @@ export class Activity {
     private _date: Date;
     public get date() {
         return this._date;
+    }
+
+    private _localDate: Date;
+    public get localDate() {
+        return this._localDate;
     }
 
     private _renamed : boolean;

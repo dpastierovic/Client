@@ -3,7 +3,7 @@
         In order to rename activities, application needs to pull them from the Strava. You can do that by clicking on one of the buttons bellow.
     </div>
     <div>
-        Last update: <b>{{lastUpdate}}</b>
+        Last synchronized activity date: <b>{{lastUpdate}}</b>
     </div>
     <div>
         {{updateStatus}}
@@ -13,6 +13,6 @@
     </div>
     <div>
         <app-hint-button id="UpdateEverything" buttonText="Update Everything" hintText="Updates ALL activities uploaded to Strava. This can take a lot of time, and uses many Strava API calls, 
-        which are limited hourly and daily. Please use sparingly."></app-hint-button>
+        which are limited hourly and daily. Please use sparingly." (onClick)="onUpdateEverythingClick()"></app-hint-button>
     </div>
 </div>

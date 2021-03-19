@@ -28,7 +28,7 @@ export class ApiService {
       let output = new Array<Activity>();      
       (activities as Object[]).forEach(activity => {
         output.push(new Activity(activity['id'], activity['athlete']['id'], activity['name'], activity['type'],
-          activity['map']['summary_polyline'], activity['start_date_local'], false)
+          activity['map']['summary_polyline'], activity['start_date'], activity['start_date_local'], false)
         );
       });
       return output;
@@ -58,5 +58,12 @@ export class ApiService {
 
   postActivity(activity: Activity): Observable<Object> {
     return this.httpClient.put('/api/activity', activity, { headers: { Accept: 'text/plain' }})
+  }
+
+  postUpdateDate(date: Date, localDate: Date): Observable<Object> {
+    let dates: Array<Date> = new Array<Date>();
+    dates.push(date);
+    dates.push(localDate);
+    return this.httpClient.put('/api/activity/updateDate/' + this.oauthService.loggedInUser.id, dates, { headers: { Accept: 'text/plain' }})
   }
 }
